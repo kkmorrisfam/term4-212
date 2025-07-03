@@ -35,26 +35,29 @@ public static class Arrays
     {
         // TODO Problem 2 Start
         // Method does not return a value, so I need to change the values in data
+
+        Debug.WriteLine("amount: " + amount);
+
         // create 2 empty lists to hold ranges, could also use arrays
-    Debug.WriteLine("amount: " + amount);
         List<int> firstHalf = new List<int>();
         List<int> secondHalf = new List<int>();
 
         //get size of list data
         int listSize = data.Count();
 
-    Debug.WriteLine("List Size: " + listSize);
+        Debug.WriteLine("List Size: " + listSize);
         //if listSize == amount, then there's nothing to do, list will be the same
         //if not, complete the logic to rotate the list
         if (amount < listSize)
         {
-            // get the position where the list index 0 item will move to
+            // get the position where the list index will move from 0 to ?
             // find this by taking the list size less the amount of the shift
             int midIndex = listSize - amount;   
             Debug.WriteLine("midIndex: " + midIndex);
 
-            //get first half range and add to new list
+            //get first half of range and add to new list
             //get the range from 0 and gather items (count) to shift (listSize - amount)
+            //data.GetRange(index, count) -> add to firstHalf list
             firstHalf.AddRange(data.GetRange(0, midIndex));
 
             Debug.WriteLine("first half: ");
@@ -64,6 +67,7 @@ public static class Arrays
             }
 
             // get the range from the middle to the end
+            //data.GetRange(index, count) -> secondHalf list
             secondHalf.AddRange(data.GetRange(midIndex, amount));
 
             Debug.WriteLine("Second half: ");
@@ -74,7 +78,7 @@ public static class Arrays
             }
             // clear all data in the list that was passed in
             data.Clear();
-            //add the second half list to the original data list
+            //add the second half list to the original data list first
             data.AddRange(secondHalf);
             //append the first half list to the original data list
             data.AddRange(firstHalf);
