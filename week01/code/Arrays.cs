@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 public static class Arrays
 {
     /// <summary>
@@ -9,11 +11,17 @@ public static class Arrays
     public static double[] MultiplesOf(double number, int length)
     {
         // TODO Problem 1 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // create empty array
+        // Use for loop to find number *1, number * 2....number * n
+        // start loop at 1, go to length, multiply by i, incriment i
+        // add each product to array within loop
+        double[] products = new double[length];  // declare empty array of doubles of size length; goes from 0 to length-1
+        for (int i = 0; i < length; i++)
+        {
+            products[i] = (i + 1) * number;  //assign value starting at index 0 in array, for value multiply number starting with 1.
+        }
 
-        return []; // replace this return statement with your own
+        return products; // return array of products
     }
 
     /// <summary>
@@ -26,8 +34,58 @@ public static class Arrays
     public static void RotateListRight(List<int> data, int amount)
     {
         // TODO Problem 2 Start
-        // Remember: Using comments in your program, write down your process for solving this problem
-        // step by step before you write the code. The plan should be clear enough that it could
-        // be implemented by another person.
+        // Method does not return a value, so I need to change the values in data
+        // create 2 empty lists to hold ranges, could also use arrays
+    Debug.WriteLine("amount: " + amount);
+        List<int> firstHalf = new List<int>();
+        List<int> secondHalf = new List<int>();
+
+        //get size of list data
+        int listSize = data.Count();
+
+    Debug.WriteLine("List Size: " + listSize);
+        //if listSize == amount, then there's nothing to do, list will be the same
+        //if not, complete the logic to rotate the list
+        if (amount < listSize)
+        {
+            // get the position where the list index 0 item will move to
+            // find this by taking the list size less the amount of the shift
+            int midIndex = listSize - amount;   
+            Debug.WriteLine("midIndex: " + midIndex);
+
+            //get first half range and add to new list
+            //get the range from 0 and gather items (count) to shift (listSize - amount)
+            firstHalf.AddRange(data.GetRange(0, midIndex));
+
+            Debug.WriteLine("first half: ");
+            foreach (int item in firstHalf)
+            {
+                Debug.WriteLine($"{item}, ");
+            }
+
+            // get the range from the middle to the end
+            secondHalf.AddRange(data.GetRange(midIndex, amount));
+
+            Debug.WriteLine("Second half: ");
+            foreach (int item in secondHalf)
+            {
+                Debug.WriteLine($"{item}, ");
+
+            }
+            // clear all data in the list that was passed in
+            data.Clear();
+            //add the second half list to the original data list
+            data.AddRange(secondHalf);
+            //append the first half list to the original data list
+            data.AddRange(firstHalf);
+
+            // check to see results
+            Debug.WriteLine("\nend data: ");
+            foreach (int item in data)
+            {
+                Debug.Write($"{item}, ");
+            }
+
+        }
     }
 }
