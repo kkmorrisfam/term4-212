@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 // TODO Problem 1 - Run test cases and record any defects the test code finds in the comment above the test method.
@@ -34,6 +35,7 @@ public class TakingTurnsQueueTests
             }
 
             var person = players.GetNextPerson();
+
             Assert.AreEqual(expectedResult[i].Name, person.Name);
             i++;
         }
@@ -103,7 +105,7 @@ public class TakingTurnsQueueTests
 
         for (int i = 0; i < 10; i++)
         {
-            var person = players.GetNextPerson();
+            var person = players.GetNextPerson();            
             Assert.AreEqual(expectedResult[i].Name, person.Name);
         }
 

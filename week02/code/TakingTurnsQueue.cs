@@ -1,3 +1,5 @@
+using System.Diagnostics;
+
 /// <summary>
 /// This queue is circular.  When people are added via AddPerson, then they are added to the 
 /// back of the queue (per FIFO rules).  When GetNextPerson is called, the next person
@@ -33,6 +35,8 @@ public class TakingTurnsQueue
     /// </summary>
     public Person GetNextPerson()
     {
+        // Debug.WriteLine("GetNextPerson1 _people:", _people.ToString());
+
         if (_people.IsEmpty())
         {
             throw new InvalidOperationException("No one in the queue.");
@@ -40,12 +44,21 @@ public class TakingTurnsQueue
         else
         {
             Person person = _people.Dequeue();
+            // person.Turns -= 1;
             if (person.Turns > 1)
             {
                 person.Turns -= 1;
+                // Debug.WriteLine("GetNextPerson person:", person.ToString());
+                // Debug.WriteLine("GetNextPerson2 _people:", _people.ToString());
+                // Debug.WriteLine("GetNextPerson turn: ", person.Turns);
+                _people.Enqueue(person);
+            }
+            else if (person.Turns < 1)
+            {
                 _people.Enqueue(person);
             }
 
+            Debug.WriteLine("Returned Person: ", person.ToString());
             return person;
         }
     }
