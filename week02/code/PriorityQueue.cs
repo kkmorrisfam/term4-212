@@ -26,13 +26,16 @@ public class PriorityQueue
 
         // Find the index of the item with the highest priority to remove
         var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++)
+        for (int index = 1; index < _queue.Count; index++)
         {
             Debug.WriteLine("");
+            Debug.WriteLine("index: " + index);
+            Debug.WriteLine("queue.Count-1: " + (_queue.Count));
+            Debug.WriteLine("highestPriorityIndex, before: " + (highPriorityIndex));
             if (_queue[index].Priority > _queue[highPriorityIndex].Priority)
             {
-                highPriorityIndex = index;                
-                Debug.WriteLine("Highest Priority Index Loop" + highPriorityIndex);
+                highPriorityIndex = index;
+                Debug.WriteLine("Highest Priority Index Loop, after" + highPriorityIndex);
             }
         }
 

@@ -22,7 +22,7 @@ public class PriorityQueueTests
         priorityQueue.Enqueue("Madison", 1);
 
         string expectedResults = "[Bob (Pri:4), Levi (Pri:2), Bryce (Pri:6), Madison (Pri:1)]";
-;
+        ;
         string actualResults = priorityQueue.ToString();
         Assert.AreEqual(expectedResults, actualResults);
 
@@ -119,5 +119,65 @@ public class PriorityQueueTests
 
     }
 
+    [TestMethod]
+
+    // Scenario: Check to see if, when the highest priority item is at the end, each item comes out of the queue in the correct order and is removed after dequeued
+    // Expected Result: ["Miranda", "Alden", "Bryce", "Bob", "Katy", "Levi", "Madison", "Vixie"]
+    // Defect(s) Found: When the last item added was the highest priority, it did not remove it first.
+    public void TestPriorityQueue_6()
+    {
+        var priorityQueue = new PriorityQueue();
+        priorityQueue.Enqueue("Bob", 4);
+        priorityQueue.Enqueue("Levi", 2);
+        priorityQueue.Enqueue("Bryce", 6);
+        priorityQueue.Enqueue("Madison", 1);
+        priorityQueue.Enqueue("Katy", 4);
+        priorityQueue.Enqueue("Alden", 8);
+        priorityQueue.Enqueue("Vixie", 1);
+        priorityQueue.Enqueue("Miranda", 9);
+
+        string[] expectedOrderedArray = ["Miranda", "Alden", "Bryce", "Bob", "Katy", "Levi", "Madison", "Vixie"];
+        int arraysize = expectedOrderedArray.Length;
+        string[] resultsArray = new string[arraysize];
+
+        for (int i = 0; i < arraysize; i++)
+        {
+            resultsArray[i] = priorityQueue.Dequeue();
+        }
+        CollectionAssert.AreEqual(expectedOrderedArray, resultsArray);
+        // Debug.WriteLine("Expected: " + string.Join(", ", expectedOrderedArray));
+        // Debug.WriteLine("Actual:   " + string.Join(", ", resultsArray));
+
+    }
+
+    [TestMethod]
+
+    // Scenario: Check to see if, when the highest priority item is at the beginning, each item comes out of the queue in the correct order and is removed after dequeued
+    // Expected Result: ["Miranda", "Alden", "Bryce", "Bob", "Katy", "Levi", "Madison", "Vixie"]
+    // Defect(s) Found: Need to make sure that the highest priority at the beginning is working, after changing code.
+    public void TestPriorityQueue_7()
+    {
+        var priorityQueue = new PriorityQueue();
+        priorityQueue.Enqueue("Miranda", 9);
+        priorityQueue.Enqueue("Bob", 4);
+        priorityQueue.Enqueue("Levi", 2);
+        priorityQueue.Enqueue("Bryce", 6);
+        priorityQueue.Enqueue("Madison", 1);
+        priorityQueue.Enqueue("Katy", 4);
+        priorityQueue.Enqueue("Alden", 8);
+        priorityQueue.Enqueue("Vixie", 1);
+        
+
+        string[] expectedOrderedArray = ["Miranda", "Alden", "Bryce", "Bob", "Katy", "Levi", "Madison", "Vixie"];
+        int arraysize = expectedOrderedArray.Length;
+        string[] resultsArray = new string[arraysize];
+
+        for (int i = 0; i < arraysize; i++)
+        {
+            resultsArray[i] = priorityQueue.Dequeue();
+        }
+        CollectionAssert.AreEqual(expectedOrderedArray, resultsArray);
+     
+    }
 
 }
