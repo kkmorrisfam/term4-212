@@ -24,7 +24,19 @@
 
     private static int CountDuplicates(int[] data)
     {
-        // Add code here.
-        return 0;
+        // code here
+        HashSet<int> uniqueNumbers = new();
+        HashSet<int> duplicateNumbers = new();
+
+        foreach (int num in data)
+        {
+            bool unique = uniqueNumbers.Add(num);
+            if (!unique)
+            {
+                duplicateNumbers.Add(num);
+            }
+        }
+        int duplicates = duplicateNumbers.Count;
+        return duplicates;
     }
 }
