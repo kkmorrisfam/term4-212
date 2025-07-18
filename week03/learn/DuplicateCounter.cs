@@ -28,15 +28,25 @@
         HashSet<int> uniqueNumbers = new();
         HashSet<int> duplicateNumbers = new();
 
+
         foreach (int num in data)
         {
-            bool unique = uniqueNumbers.Add(num);
-            if (!unique)
+            // if attempt to add duplicate, the hashset will not be modified
+            // and the .Add function will return false
+            if (!uniqueNumbers.Add(num))
             {
                 duplicateNumbers.Add(num);
             }
         }
-        int duplicates = duplicateNumbers.Count;
+        // foreach (int num in data)
+            // {
+            //     bool unique = uniqueNumbers.Add(num);
+            //     if (!unique)
+            //     {
+            //         duplicateNumbers.Add(num);
+            //     }
+            // }
+            int duplicates = duplicateNumbers.Count;
         return duplicates;
     }
 }

@@ -21,8 +21,48 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        //create an empty set and list
+        HashSet<string> checkd = new();
+        List<string> results = new List<string>();
+
+        //check each word
+        foreach (string word in words)
+        {
+            //check to see if first and second letter are same
+            // if they are not the same, execute block
+            if (!(word[0] == word[1]))
+            {
+                //reverse incoming word
+                string reversed = $"{word[1]}{word[0]}";
+
+                // bool yes = words.Contains(reversed);
+                // check to see if words contains the reversed word as well, if so, execute block
+
+                // this is the same as looking as every single item.
+                //use sets instead of contains on an array, it's just like a loop
+                //you can use contains set, and be ok
+                //
+                if (words.Contains(reversed))
+                {
+                    //add the word to the set if it's not there    
+                    if (checkd.Add(word))
+                    {
+                        //if I'm adding the word to the set, add the reversed also
+                        checkd.Add(reversed);
+                        //add both words to the HashSet if neither were there  --should I put this in a different if statement?
+                        results.Add($"{word} & {reversed}");
+                        Console.WriteLine($"True: {word}, {reversed}");
+                    }
+                }
+            }
+        }
+        Console.WriteLine("*********************************");
+        foreach (string item in results)
+        {
+            Console.Write($"{item}, ");
+        }
+        
+        return results.ToArray();
     }
 
     /// <summary>
