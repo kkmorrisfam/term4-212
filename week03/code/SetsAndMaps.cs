@@ -25,7 +25,7 @@ public static class SetsAndMaps
         HashSet<string> checkd = new();
         List<string> results = new List<string>();
 
-        //check each word
+        //check each word, foreach runs at O(n)
         foreach (string word in words)
         {
             //check to see if first and second letter are same
@@ -35,33 +35,36 @@ public static class SetsAndMaps
                 //reverse incoming word
                 string reversed = $"{word[1]}{word[0]}";
 
-                // bool yes = words.Contains(reversed);
-                // check to see if words contains the reversed word as well, if so, execute block
-
-                // this is the same as looking as every single item.
-                //use sets instead of contains on an array, it's just like a loop
-                //you can use contains set, and be ok
-                //
-                if (words.Contains(reversed))
+                // using .Contains on an array is O(n), just like a loop
+                // if (words.Contains(reversed))
+                // {
+                //     //add the word to the set if it's not there    
+                //     if (checkd.Add(word))
+                //     {
+                //         //if I'm adding the word to the set, add the reversed also
+                //         checkd.Add(reversed);
+                //         //add both words to the HashSet if neither were there  --should I put this in a different if statement?
+                //         results.Add($"{word} & {reversed}");
+                //         Console.WriteLine($"True: {word}, {reversed}");
+                //     }
+                // }
+                if (checkd.Contains(reversed))
                 {
-                    //add the word to the set if it's not there    
-                    if (checkd.Add(word))
-                    {
-                        //if I'm adding the word to the set, add the reversed also
-                        checkd.Add(reversed);
-                        //add both words to the HashSet if neither were there  --should I put this in a different if statement?
-                        results.Add($"{word} & {reversed}");
-                        Console.WriteLine($"True: {word}, {reversed}");
-                    }
+                    //add both words to the HashSet if neither were there  --should I put this in a different if statement?
+                    results.Add($"{word} & {reversed}");
                 }
+                checkd.Add(reversed);
+                checkd.Add(word);  //do I need to add this?
             }
         }
-        Console.WriteLine("*********************************");
-        foreach (string item in results)
-        {
-            Console.Write($"{item}, ");
-        }
         
+        // Test loop is another O(n)
+        // Console.WriteLine("*********************************");
+        // foreach (string item in results)
+        // {
+        //     Console.Write($"{item}, ");
+        // }
+
         return results.ToArray();
     }
 
@@ -79,10 +82,23 @@ public static class SetsAndMaps
     public static Dictionary<string, int> SummarizeDegrees(string filename)
     {
         var degrees = new Dictionary<string, int>();
-        foreach (var line in File.ReadLines(filename))
+        foreach (var line in File.ReadLines(filename))  //read file into line, 
         {
+            //for each line
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+                        
+            var degree = fields[3];   //column 4
+            
+            //check to see if the dictionary contains the key that matches the degree
+            if (!degrees.ContainsKey(degree))
+            {
+                degrees[degree] = 1;  //if it's not already there, add degree as key and 1 as value
+            }
+            else
+            {
+                degrees[degree] += 1;  // if it's there, increment value
+            }       
+
         }
 
         return degrees;
@@ -107,7 +123,105 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
+
+        //create a dictionary to hold value of each letter
+        var chars = new Dictionary<char, int>();
+        // var moreChars = new Dictionary<char, int>();
+        int i = -1;
+        int hasValue = 0;
+        // if word1 in shorter than word2, swap values so that word1 is longer or equal to word2 for loop
+        // could be different size depending upon spaces
+        if (word1.Length < word2.Length)
+        {
+            (word1, word2) = (word2, word1);
+            // string holding = word1;
+            // word1 = word2;
+            // word2 = holding;
+        }
+        // Console.WriteLine("Word1 " + word1 + ", Word2: " + word2);  //yes it swapped
+
+        foreach (char character in word1)
+        {
+            //increment i to keep track of index
+            i++;
+            Console.WriteLine("i value: " + i);
+            //if character not a space, continue
+            if (character != ' ')
+            {
+                //if not already there, add character to dictionary as key
+                if (!chars.ContainsKey(character))
+                {
+                    //add 1 to value
+                    chars[character] = 1;
+                    //add 1 to hasValue
+                    hasValue += 1;
+                }
+                else
+                {
+                    //if key already there
+                    //add 1 to value
+                    chars[character] += 1;
+                    //add 1 to hasValue
+                    hasValue += 1;
+                }
+
+                //check to see if word2 character at same index is in dictionary
+                if (i < word2.Length)
+                {
+                    if (!chars.ContainsKey(word2[i]))
+                    {
+                        //if it's there, add character and -1 to dictionary
+                        chars[word2[i]] = -1;
+                        //add -1 to hasValue
+                        hasValue += -1;
+                    }
+                    else
+                    {
+                        //if it's there, add -1 to value
+                        chars[word2[i]] -= 1;
+                        //add -1 to hasValue
+                        hasValue += -1;
+                        // if (chars[character] == 0)
+                    }
+                }
+                
+            }
+
+
+        }
+        Console.WriteLine("IsAnagram_________________********************");
+        Console.WriteLine("hasValue; " + hasValue);
+        //returns true if there are equal amounts of each letter
+        if (hasValue == 0)
+        {
+            return true;
+        }
         return false;
+        
+            //can't use a hashset because it will eliminate duplicate letters
+        // HashSet<string> words = new HashSet<string>();
+        // mostly works, but not fast enough, and doesn't work for last two tests
+        // //convert incoming words to character arrays
+        // char[] chars1 = word1.ToCharArray();  //O(n)
+        // char[] chars2 = word2.ToCharArray();  //O(n)
+        // Array.Sort(chars1);//O(n)
+        // Array.Sort(chars2);//O(n)
+        // string sortedWord1 = new string(chars1);
+        // string sortedWord2 = new string(chars2);
+        // string newSortedWord1 = sortedWord1.Trim();//O(n)
+        // string newSortedWord2 = sortedWord1.Trim();//O(n)
+        // sortedWord2.Trim();
+        // Console.WriteLine("********************************");
+        // Console.WriteLine("sortedWord1: " + newSortedWord1);
+        // Console.WriteLine("SortedWord2: " + newSortedWord2);
+
+        // //ToLower is O(n)
+        // if (newSortedWord1.ToLower() == newSortedWord2.ToLower())
+        // {
+        //     return true;
+        // }
+
+        // return false;
     }
 
     /// <summary>
@@ -139,7 +253,9 @@ public static class SetsAndMaps
         // TODO Problem 5:
         // 1. Add code in FeatureCollection.cs to describe the JSON using classes and properties 
         // on those classes so that the call to Deserialize above works properly.
-        // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
+        //  2. Add code below to create a string out each place a earthquake has happened today and its magitude.
+        var
+
         // 3. Return an array of these string descriptions.
         return [];
     }

@@ -32,7 +32,20 @@ public class Maze
     /// </summary>
     public void MoveLeft()
     {
-        // FILL IN CODE
+        //get the value for left        
+        bool[] directions = _mazeMap[(_currX, _currY)];  // Get the bool[] array for the key (X, Y)
+        bool nextDirection = directions[0]; // Access the first element of the array for left
+        // if value is true
+        if (nextDirection)
+        {
+            // decrement x
+            _currX -= 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }       
+        
     }
 
     /// <summary>
@@ -41,7 +54,19 @@ public class Maze
     /// </summary>
     public void MoveRight()
     {
-        // FILL IN CODE
+        //get the value for right        
+        bool[] directions = _mazeMap[(_currX, _currY)];  // Get the bool[] array for the key (X, Y)
+        bool nextDirection = directions[1]; // Access the 2nd element of the array for right
+        //if value is true....
+        if (nextDirection)
+        {
+            //increment x
+            _currX += 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
     }
 
     /// <summary>
@@ -50,7 +75,22 @@ public class Maze
     /// </summary>
     public void MoveUp()
     {
-        // FILL IN CODE
+
+        //get the value for Up        
+        bool[] directions = _mazeMap[(_currX, _currY)];  // Get the bool[] array for the key (X, Y)
+        bool nextDirection = directions[2]; // Access the element in array for Up
+        //if value is true....
+        if (nextDirection)
+        {
+            //decrement Y
+            _currY -= 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
+
     }
 
     /// <summary>
@@ -59,7 +99,20 @@ public class Maze
     /// </summary>
     public void MoveDown()
     {
-        // FILL IN CODE
+        //get the value for Down        
+        bool[] directions = _mazeMap[(_currX, _currY)];  // Get the bool[] array for the key (X, Y)
+        bool nextDirection = directions[3]; // Access the element in array for Down
+        //if value is true....
+        if (nextDirection)
+        {
+            //Increment Y
+            _currY += 1;
+        }
+        else
+        {
+            throw new InvalidOperationException("Can't go that way!");
+        }
+
     }
 
     public string GetStatus()

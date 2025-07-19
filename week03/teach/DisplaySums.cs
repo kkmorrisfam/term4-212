@@ -35,12 +35,14 @@ public static class DisplaySums {
         var pairs = new HashSet<(int, int)>();
 
         // TODO Problem 2 - This should print pairs of numbers in the given array
+        // it doesn't work as expected.
 
         foreach (var num in numbers)
         {
             int result = 0;
             // check 
-            result = 10 - num;            // need to check if result is in numbers, put the numbers in the set, then check to see if the numbers are in teh set  CAll conatins on the set
+            result = 10 - num;
+            // need to check if result is in numbers, put the numbers in the set, then check to see if the numbers are in teh set  CAll conatins on the set
             //check to see if num in a pair
             if (found.Add(num) && found.Add(result))
             {
@@ -48,7 +50,7 @@ public static class DisplaySums {
                 pairs.Add((num, result));
                 Console.WriteLine(num + ", " + result);
             }
-           
+
         }
         //  Console.WriteLine("Pair: " + String.Join(", ", pairs)); 
         

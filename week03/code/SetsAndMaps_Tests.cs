@@ -291,6 +291,7 @@ public class MazeTests
             { (1, 1), new[] { false, true, false, true } },
             { (1, 2), new[] { false, true, true, false } },
             { (1, 3), new[] { false, false, false, false } },
+            
             { (1, 4), new[] { false, true, false, true } },
             { (1, 5), new[] { false, false, true, true } },
             { (1, 6), new[] { false, false, true, false } },
