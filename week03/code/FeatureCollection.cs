@@ -26,6 +26,6 @@ public class Feature
 //Properties for next level of objects under Features
 public class Property
 {
-    public decimal mag;
-    public string place;
+    public decimal? Mag;
+    public string Place;
 }
