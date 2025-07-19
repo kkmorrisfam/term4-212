@@ -125,79 +125,62 @@ public static class SetsAndMaps
         // TODO Problem 3 - ADD YOUR CODE HERE
 
         //create a dictionary to hold value of each letter
-        var chars = new Dictionary<char, int>();
-        // var moreChars = new Dictionary<char, int>();
-        int i = -1;
-        int hasValue = 0;
-        // if word1 in shorter than word2, swap values so that word1 is longer or equal to word2 for loop
-        // could be different size depending upon spaces
-        if (word1.Length < word2.Length)
+        var chars1 = new Dictionary<char, int>();
+        var chars2 = new Dictionary<char, int>();
+
+        // get rid of spaces and uppercase       
+        var newWord1 = word1.ToLower().Replace(" ", "");
+        var newWord2 = word2.ToLower().Replace(" ", "");
+
+        // if they are not the same size after normalizing, return false
+        if (newWord1.Length != newWord2.Length)
         {
-            (word1, word2) = (word2, word1);
-            // string holding = word1;
-            // word1 = word2;
-            // word2 = holding;
+            return false;
         }
-        // Console.WriteLine("Word1 " + word1 + ", Word2: " + word2);  //yes it swapped
 
-        foreach (char character in word1)
+        foreach (char character in newWord1)
         {
-            //increment i to keep track of index
-            i++;
-            Console.WriteLine("i value: " + i);
-            //if character not a space, continue
-            if (character != ' ')
+            //if not already there, add character to dictionary as key
+            if (!chars1.ContainsKey(character))
             {
-                //if not already there, add character to dictionary as key
-                if (!chars.ContainsKey(character))
-                {
-                    //add 1 to value
-                    chars[character] = 1;
-                    //add 1 to hasValue
-                    hasValue += 1;
-                }
-                else
-                {
-                    //if key already there
-                    //add 1 to value
-                    chars[character] += 1;
-                    //add 1 to hasValue
-                    hasValue += 1;
-                }
+                //set value to 1
+                chars1[character] = 1;
+            }
+            else
+            {
+                //if key already there
+                //add 1 to value
+                chars1[character] += 1;                
+            }
+        }
 
-                //check to see if word2 character at same index is in dictionary
-                if (i < word2.Length)
-                {
-                    if (!chars.ContainsKey(word2[i]))
-                    {
-                        //if it's there, add character and -1 to dictionary
-                        chars[word2[i]] = -1;
-                        //add -1 to hasValue
-                        hasValue += -1;
-                    }
-                    else
-                    {
-                        //if it's there, add -1 to value
-                        chars[word2[i]] -= 1;
-                        //add -1 to hasValue
-                        hasValue += -1;
-                        // if (chars[character] == 0)
-                    }
-                }
+        foreach (char character in newWord2)
+        {
+            //check to see if word2 character at same index is in dictionary
+            if (!chars1.ContainsKey(character))
+            {
+                //if it's there, add character and -1 to dictionary
+                chars1[character] = -1;
+            }
+            else
+            {
+                //if it's there, add -1 to value
+                chars1[character] -= 1;
                 
             }
-
-
         }
-        Console.WriteLine("IsAnagram_________________********************");
-        Console.WriteLine("hasValue; " + hasValue);
-        //returns true if there are equal amounts of each letter
-        if (hasValue == 0)
+
+        foreach (var item in chars1)
         {
-            return true;
+            if (item.Value != 0)
+            {
+                return false;
+            }
         }
-        return false;
-        
+
+     
+        return true;
+    }    
             //can't use a hashset because it will eliminate duplicate letters
         // HashSet<string> words = new HashSet<string>();
         // mostly works, but not fast enough, and doesn't work for last two tests
@@ -222,7 +205,7 @@ public static class SetsAndMaps
         // }
 
         // return false;
-    }
+    
 
     /// <summary>
     /// This function will read JSON (Javascript Object Notation) data from the 
