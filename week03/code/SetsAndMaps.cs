@@ -54,7 +54,7 @@ public static class SetsAndMaps
                     results.Add($"{word} & {reversed}");
                 }
                 checkd.Add(reversed);
-                checkd.Add(word);  //do I need to add this?
+                checkd.Add(word);  
             }
         }
         
