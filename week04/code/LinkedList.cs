@@ -157,34 +157,39 @@ public class LinkedList : IEnumerable<int>
                 }
                 else
                 {
-                    //     current.Next.Prev = current.Prev; //for the node after current, set the pointer for previous to current node previous
-                    //     current.Prev.Next = current.Next; //for the node before current, set the pointer for the next node to node after current.
+                    current.Next.Prev = current.Prev; //for the node after current, set the pointer for previous to current node previous
+                    current.Prev.Next = current.Next; //for the node before current, set the pointer for the next node to node after current.
                 }
                 return;
             }
+         
+            //if still in the while loop, set current to the next node
+            current = current.Next;
+
+
             //doesn't work this way. goes through loop one more time.
-                // if (_head.Data == value) //if the value is in the head node, remove head, break
-                // {
-                //     RemoveHead();
-                //     return;
-                // }
-                // else if (_tail.Data == value)
-                // {
-                //     RemoveTail();
-                //     return;
-                // }
-                // else if (current.Data == value)
-                // {
-                //     current.Next.Prev = current.Prev; //for the node after current, set the pointer for previous to current node previous
-                //     current.Prev.Next = current.Next; //for the node before current, set the pointer for the next node to node after current.
-                //     return;
-                // }
-                // else
-                // {
-                //     //if still in the while loop, set current to the next node
-                //     current = current.Next;
-                // }
-                Debug.WriteLine("current: " + current.Data);
+            // if (_head.Data == value) //if the value is in the head node, remove head, break
+            // {
+            //     RemoveHead();
+            //     return;
+            // }
+            // else if (_tail.Data == value)
+            // {
+            //     RemoveTail();
+            //     return;
+            // }
+            // else if (current.Data == value)
+            // {
+            //     current.Next.Prev = current.Prev; //for the node after current, set the pointer for previous to current node previous
+            //     current.Prev.Next = current.Next; //for the node before current, set the pointer for the next node to node after current.
+            //     return;
+            // }
+            // else
+            // {
+            //     //if still in the while loop, set current to the next node
+            //     current = current.Next;
+            // }
+            // Debug.WriteLine("current: " + current.Data);
         }
     }
 
@@ -193,7 +198,19 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void Replace(int oldValue, int newValue)
     {
-        // TODO Problem 4
+        // create current variable, set it to head
+        Node? current = _head;
+        while (current is not null)
+        {
+            //check to see if current value = old value
+            if (current.Data == oldValue)
+            {
+                //if so, set data to new value
+                current.Data = newValue;
+            }
+            //increment current to next node until current = null
+            current = current.Next;
+        }
     }
 
     /// <summary>
@@ -225,13 +242,20 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public IEnumerable Reverse()
     {
-        // TODO Problem 5
+        //create current, set it to tail as starting point
+        Node? current = _tail;
+        //check to make sure current is not null before continuing
+        while (current is not null)
+        {
+            yield return current.Data;
+            current = current.Prev; 
+        }
 
-        //  foreach(var item in myLinkedList)
-        // {
-        //     Debug.WriteLine(item);
-        // }
-        yield return 0; // replace this line with the correct yield return statement(s)
+            //  foreach(var item in myLinkedList)
+            // {
+            //     Debug.WriteLine(item);
+            // }
+            
     }
 
     public override string ToString()
