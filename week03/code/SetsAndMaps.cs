@@ -35,9 +35,9 @@ public static class SetsAndMaps
                 //reverse incoming word
                 string reversed = $"{word[1]}{word[0]}";
 
-                // using .Contains on an array is O(n), just like a loop
+                // using .Contains on an array is O(n), just like a loop so this becomes a loop inside of a loop or O(n^2) within the foreach loop
                 // if (words.Contains(reversed))
-                // {
+                // 
                 //     //add the word to the set if it's not there    
                 //     if (checkd.Add(word))
                 //     {

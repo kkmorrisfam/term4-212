@@ -1,4 +1,6 @@
 using System.Collections;
+using System.Diagnostics;
+using System.Globalization;
 
 public class LinkedList : IEnumerable<int>
 {
@@ -32,7 +34,25 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void InsertTail(int value)
     {
-        // TODO Problem 1
+        // create a new node
+        Node newNode = new(value);
+
+        //check to see if tail is null, because if it's null, then nothing has been set yet in class
+        if (_tail is null)
+        {
+            //if null, set head & tail to newNode
+            //if _tail is null, no values for either node have been set
+            _head = newNode;
+            _tail = newNode;
+        }
+        else
+        {
+            //set the new nodes Prev setting to point to current tail
+            newNode.Prev = _tail;
+            _tail.Next = newNode;  //whatever _tail.Next is pointing to, set it to newNode
+            _tail = newNode; //have _tail now point to newNode.
+        }
+
     }
 
 
@@ -64,7 +84,19 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void RemoveTail()
     {
-        // TODO Problem 2
+        //check to see if head = tail
+        if (_head == _tail)
+        {
+            // set both head and tail to null, removing last node
+            _head = null;
+            _tail = null;
+        }
+        else
+        {
+            _tail.Prev.Next = null;  //the node before tail, set next  to null
+            _tail = _tail.Prev; //the tail now points to the node before tail.
+
+        }
     }
 
     /// <summary>
@@ -108,7 +140,52 @@ public class LinkedList : IEnumerable<int>
     /// </summary>
     public void Remove(int value)
     {
-        // TODO Problem 3
+        Node? current = _head;
+
+        while (current != null)
+        {
+            if (current.Data == value)
+            {
+                //check to see if curent is the head or tail
+                if (current == _head)
+                {
+                    RemoveHead();
+                }
+                else if (current == _tail)
+                {
+                    RemoveTail();
+                }
+                else
+                {
+                    //     current.Next.Prev = current.Prev; //for the node after current, set the pointer for previous to current node previous
+                    //     current.Prev.Next = current.Next; //for the node before current, set the pointer for the next node to node after current.
+                }
+                return;
+            }
+            //doesn't work this way. goes through loop one more time.
+                // if (_head.Data == value) //if the value is in the head node, remove head, break
+                // {
+                //     RemoveHead();
+                //     return;
+                // }
+                // else if (_tail.Data == value)
+                // {
+                //     RemoveTail();
+                //     return;
+                // }
+                // else if (current.Data == value)
+                // {
+                //     current.Next.Prev = current.Prev; //for the node after current, set the pointer for previous to current node previous
+                //     current.Prev.Next = current.Next; //for the node before current, set the pointer for the next node to node after current.
+                //     return;
+                // }
+                // else
+                // {
+                //     //if still in the while loop, set current to the next node
+                //     current = current.Next;
+                // }
+                Debug.WriteLine("current: " + current.Data);
+        }
     }
 
     /// <summary>
@@ -139,6 +216,8 @@ public class LinkedList : IEnumerable<int>
             yield return curr.Data; // Provide (yield) each item to the user
             curr = curr.Next; // Go forward in the linked list
         }
+
+       
     }
 
     /// <summary>
@@ -147,6 +226,11 @@ public class LinkedList : IEnumerable<int>
     public IEnumerable Reverse()
     {
         // TODO Problem 5
+
+        //  foreach(var item in myLinkedList)
+        // {
+        //     Debug.WriteLine(item);
+        // }
         yield return 0; // replace this line with the correct yield return statement(s)
     }
 
