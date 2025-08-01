@@ -170,6 +170,7 @@ public static class Recursion
 
         //base case, when there are no * in string
 
+        // IndexOf returns index of first occurance
         int index = pattern.IndexOf('*');
         // if there is no '*' IndexOf returns -1
         if (index == -1)
@@ -184,9 +185,15 @@ public static class Recursion
             // needs 2 recursive calls
 
             string modifiedPattern;
-            modifiedPattern = pattern.Replace('*', '0');
+            // modifiedPattern = pattern.Replace('*', '0');  //replaces all instances - don't use
+            // use index of '*', get substring before index, and after index
+            // add substings together with replacement '0' inbetween
+            
+
+
             WildcardBinary(modifiedPattern, results);
-            modifiedPattern = pattern.Replace('*', '1');
+            
+            // modifiedPattern = pattern.Replace('*', '1');  //replaces all instances - don't use
             WildcardBinary(modifiedPattern, results);
         }
     }
