@@ -1,4 +1,5 @@
 using System.Collections;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client.Interfaces;
 
 public static class Recursion
 {
@@ -201,15 +202,78 @@ public static class Recursion
     {
         // If this is the first time running the function, then we need
         // to initialize the currPath list.
-        if (currPath == null) {
+        if (currPath == null)
+        {
             currPath = new List<ValueTuple<int, int>>();
+            //add starting position to current path
+            currPath.Add((x, y));
+        }
+
+        if (results == null)
+        {
+            results = new List<string>();
+        }
+
+        // Base case -is it the end, then we are done
+        if (maze.IsEnd(x, y))
+        {
+            // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
+            results.Add(currPath.AsString());
+        }
+
+        //Add current position before checking neighbors or is it already there?
+        // currPath.Add((x,y)); // Use this syntax to add to the current path
+
+        // check all positions. 
+        // use maze.IsValidMove and maze.IsEnd 
+        //check Up position
+        if (maze.IsValidMove(currPath, x, y - 1))
+        {
+            //check to see if it's already in currPath so we don't go in circles
+            if (!currPath.Contains((x, y - 1)))
+            {
+                //add position to current path
+                currPath.Add((x, y - 1));
+                //recurse from new position
+                SolveMaze(results, maze, x, y - 1, currPath);
+                //remove from current path
+                // currPath.Remove((x, y - 1));  -not the best, and takes longer
+                currPath.RemoveAt(currPath.Count - 1); // removes last item added, faster and more correct
+            }
         }
         
-        // currPath.Add((1,2)); // Use this syntax to add to the current path
+        if (maze.IsValidMove(currPath, x, y + 1)) //check Down position
+        {
+            if (!currPath.Contains((x, y + 1)))
+            {
+                currPath.Add((x, y + 1));
+                SolveMaze(results, maze, x, y + 1, currPath);
+                currPath.RemoveAt(currPath.Count - 1);
+            }
 
-        // TODO Start Problem 5
-        // ADD CODE HERE
+        }
 
-        // results.Add(currPath.AsString()); // Use this to add your path to the results array keeping track of complete maze solutions when you find the solution.
+        if (maze.IsValidMove(currPath, x - 1, y))  //check Left position
+        {
+            if (!currPath.Contains((x - 1, y)))
+            {
+                currPath.Add((x - 1, y));
+                SolveMaze(results, maze, x - 1, y, currPath);
+                currPath.RemoveAt(currPath.Count - 1);
+            }
+
+        }
+
+        if (maze.IsValidMove(currPath, x + 1, y))  //check Right position
+        {
+            if (!currPath.Contains((x + 1, y)))
+            {
+                currPath.Add((x + 1, y));
+                SolveMaze(results, maze, x + 1, y, currPath);
+                currPath.RemoveAt(currPath.Count - 1);
+            }
+        }   
+
+        // will also need to remove from results after completing everything else.
     }
 }
