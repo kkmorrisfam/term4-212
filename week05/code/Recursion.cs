@@ -183,18 +183,13 @@ public static class Recursion
             // replace it with 0 and make recursive call
             // replace it with a 1 and make a recursive call
             // needs 2 recursive calls
-
-            string modifiedPattern;
-            // modifiedPattern = pattern.Replace('*', '0');  //replaces all instances - don't use
             // use index of '*', get substring before index, and after index
             // add substings together with replacement '0' inbetween
-            
+            string modifiedPattern0 = pattern[..index] + "0" + pattern[(index + 1)..];;            
+            WildcardBinary(modifiedPattern0, results);
 
-
-            WildcardBinary(modifiedPattern, results);
-            
-            // modifiedPattern = pattern.Replace('*', '1');  //replaces all instances - don't use
-            WildcardBinary(modifiedPattern, results);
+            string modifiedPattern1 = pattern[..index] + "1" + pattern[(index + 1)..];            
+            WildcardBinary(modifiedPattern1, results);
         }
     }
 
