@@ -12,7 +12,7 @@ public class Node
     public void Insert(int value)
     {
         // TODO Start Problem 1
-
+        if (value == Data) return;
         if (value < Data)
         {
             // Insert to the left
@@ -34,6 +34,24 @@ public class Node
     public bool Contains(int value)
     {
         // TODO Start Problem 2
+        //base case
+        if (value == Data)
+        {
+            return true;
+        }
+        else if (value < Data)
+        {
+            //check left
+            //if left == value; return true
+            //else left call Contains
+
+        }
+        else if (value > Data)
+        {
+            //check right
+            //if right == value; return true
+            //else dright call Contains
+        }
         return false;
     }
 
