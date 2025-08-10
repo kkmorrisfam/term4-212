@@ -1,3 +1,6 @@
+using System.Diagnostics;
+using Microsoft.VisualStudio.TestPlatform.ObjectModel.Client.Payloads;
+
 public static class Trees
 {
     /// <summary>
@@ -49,5 +52,31 @@ public static class Trees
     private static void InsertMiddle(int[] sortedNumbers, int first, int last, BinarySearchTree bst)
     {
         // TODO Start Problem 5
+        // base case
+        if (sortedNumbers is null) return;
+        Debug.WriteLine("***entering InsertMiddle****");
+        Debug.WriteLine($"First: {first};  And Last: {last}");
+        // when first is >= last
+        if (first > last) return;
+
+        //get the middle index between first and last, get number, insert in tree
+        // first + last / 2
+        int middle = (first + last) / 2;
+        Debug.WriteLine("Middle index: " + middle);
+        // get middle number from sortedNumbers
+        int middleNumber = sortedNumbers[middle];
+        Debug.WriteLine("Middle Number: " + middleNumber);
+
+        //insert into bst
+        bst.Insert(middleNumber);
+        
+        //pass back in new first and last with list and bst for left side
+        //int leftLast = middle - 1;
+        InsertMiddle(sortedNumbers, first, middle - 1, bst);
+        
+        //pass back in new first and last with list and bst for right side
+        //int rightFirst = middle + 1;
+        InsertMiddle(sortedNumbers, middle + 1, last, bst);
+
     }
 }

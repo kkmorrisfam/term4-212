@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 public class Node
 {
     public int Data { get; set; }
@@ -35,29 +37,67 @@ public class Node
     {
         // TODO Start Problem 2
         //base case
-        if (value == Data)
-        {
+        if (value == Data)         
             return true;
-        }
-        else if (value < Data)
+        
+        if (value < Data) //call Contains to run check on value == Data
         {
-            //check left
-            //if left == value; return true
-            //else left call Contains
-
+            //check left            
+            if (Left is not null)
+            {
+                return Left.Contains(value); 
+            }
+            else
+            {
+                return false;
+            }
+            // if (Left is null) return false;
+            // else Left.Contains(value);       
+        
         }
         else if (value > Data)
         {
-            //check right
-            //if right == value; return true
-            //else dright call Contains
+            //check right side
+            if (Right is not null)
+            {
+                return Right.Contains(value);
+            }
+            else
+            {
+                return false;
+            }
         }
-        return false;
+       return false;
     }
 
     public int GetHeight()
     {
         // TODO Start Problem 4
-        return 0; // Replace this line with the correct return statement(s)
+        //base case - if the tree has no children, height = 1; return 1
+        if ((Left is null) && (Right is null)) return 1;
+
+        int leftHeight = 0;
+        int rightHeight = 0;
+        //if left node is not null, call height on left node, store height, call contains?
+        if (Left is not null)
+        {
+            //ask child for height;
+            leftHeight = Left.GetHeight();
+            
+        }
+
+        //if right node is not null, call height on right node, store height? 
+
+        if (Right is not null)
+        {
+            rightHeight = Right.GetHeight();
+        }
+
+        //compare right and left height to see which is bigger and keep the larger
+        // add 1, then return the number
+
+        return 1 + Math.Max(leftHeight, rightHeight);
+
+            //return 0; // Replace this line with the correct return statement(s)
     }
 }
